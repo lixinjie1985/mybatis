@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.eop.mybatis.mapper.PostMapper">
+
+	<insert id="savePost" parameterType="post" useGeneratedKeys="true" keyColumn="id" keyProperty="id" statementType="PREPARED">
+		insert into post (section, subject, body, createdOn, blogId, authorId)
+		values(#{section}, #{subject}, #{body}, #{createdOn}, #{blogId}, #{authorId})
+	</insert>
+  	
+	
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.eop.mybatis.mapper.BlogMapper">
+
+	<resultMap type="blog" id="blogWithTags">
+		<constructor>
+			<idArg column="blog_id" javaType="int"/>
+		</constructor>
+		<result property="title" column="blog_title"/>
+		<result property="authorId" column="blog_authorId"/>
+		<collection property="tags" ofType="tag">
+			<id property="id" column="tag_id"/>
+			<result property="name" column="tag_name"/>
+			<result property="blogId" column="tag_blogId"/>
+			<association property="blog" javaType="blog">
+				<constructor>
+					<idArg column="tag_blogId" javaType="int"/>
+				</constructor>
+				<result property="title" column="blog_title"/>
+				<result property="authorId" column="blog_authorId"/>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<resultMap type="blog" id="blogWithAuthorPosts">
+		<constructor>
+			<idArg column="blog_id" javaType="int"/>
+		</constructor>
+		<result property="title" column="blog_title"/>
+		<result property="authorId" column="blog_authorId"/>
+		<association property="author" javaType="author">
+			<id property="id" column="author_id"/>
+			<result property="username" column="author_username"/>
+			<result property="password" column="author_password"/>
+			<result property="email" column="author_email"/>
+			<result property="bio" column="author_bio"/>
+		</association>
+		<collection property="posts" ofType="post">
+			<id property="id" column="post_id"/>
+			<result property="section" column="post_section"/>
+			<result property="subject" column="post_subject"/>
+			<result property="body" column="post_body"/>
+			<result property="createdOn" column="post_createdOn"/>
+			<result property="blogId" column="post_blogId"/>
+			<result property="authorId" column="post_authorId"/>
+			<association property="author" javaType="author">
+				<id property="id" column="author_id"/>
+				<result property="username" column="author_username"/>
+				<result property="password" column="author_password"/>
+				<result property="email" column="author_email"/>
+				<result property="bio" column="author_bio"/>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<insert id="saveBlog" parameterType="blog" useGeneratedKeys="true" keyColumn="id" keyProperty="id" statementType="PREPARED">
+		insert into blog (title, authorId)
+		values(#{title},#{authorId})
+	</insert>
+  	
+	<select id="getBlogWithTags" parameterType="int" resultMap="blogWithTags">
+		select b.id  blog_id, b.title blog_title, b.authorId blog_authorId,
+			   t.id tag_id, t.name tag_name, t.blogId tag_blogId
+		from blog b left join tag t on b.id = t.blogId
+		where b.id = #{id}
+	</select>
+	
+	<select id="getBlogWithAuthorPosts" parameterType="int" resultMap="blogWithAuthorPosts">
+		select b.id blog_id, b.title blog_title, b.authorId blog_authorId,
+			   a.id author_id, a.username author_username, a.password author_password, a.email author_email, a.bio author_bio,
+			   p.id post_id, p.section post_section, p.subject post_subject, p.body post_body, p.createdOn post_createdOn, p.blogId post_blogId, p.authorId post_authorId
+			   from blog b left join author a on b.authorId = a.id
+			   left join post p on p.blogId = b.id
+			   where b.id = #{id}
+	</select>
+</mapper>
