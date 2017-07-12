@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.eop.mybatis.mapper.LogMapper">
+
+	<insert id="saveLog1" statementType="PREPARED">
+		INSERT INTO `interface_transaction_log_201601` VALUES (#{logId}, '1', '1', '1', '20160386170613957565892', '1', '1', '2016-8-5 15:48:01', '{"service":null,"method":null,"busiCode":null,"params":{"userMobile":"13512121222"},"beans":[],"logParams":{}}', '111', '1', '2016-8-5 15:48:11', '1', '1231111', '111');
+	</insert>
+	
+	<insert id="saveLog2" statementType="PREPARED">
+		INSERT INTO `interface_transaction_log_201602` VALUES (#{logId}, '1', '1', '1', '20160386170613957565892', '1', '1', '2016-8-5 15:48:01', '{"service":null,"method":null,"busiCode":null,"params":{"userMobile":"13512121222"},"beans":[],"logParams":{}}', '111', '1', '2016-8-5 15:48:11', '1', '1231111', '111');
+	</insert>
+	
+	<insert id="saveLog3" statementType="PREPARED">
+		INSERT INTO `interface_transaction_log_201603` VALUES (#{logId}, '1', '1', '1', '20160386170613957565892', '1', '1', '2016-8-5 15:48:01', '{"service":null,"method":null,"busiCode":null,"params":{"userMobile":"13512121222"},"beans":[],"logParams":{}}', '111', '1', '2016-8-5 15:48:11', '1', '1231111', '111');
+	</insert>
+	
+	<insert id="saveLog" statementType="PREPARED">
+		INSERT INTO `interface_transaction_log_201603` VALUES (#{logId}, '1', '1', '1', '20160386170613957565892', '1', '1', '2016-8-5 15:48:01', '{"service":null,"method":null,"busiCode":null,"params":{"userMobile":"13512121222"},"beans":[],"logParams":{}}', '111', '1', '2016-8-5 15:48:11', '1', '1231111', '111');
+	</insert>
+  	
+	<select id="getCount1" resultType="int">
+		SELECT count(*) from interface_transaction_log_201601;
+	</select>
+	
+	<select id="getCount2" resultType="int">
+		SELECT count(*) from interface_transaction_log_201602;
+	</select>
+	
+	<select id="getCount3" resultType="int">
+		SELECT count(*) from interface_transaction_log_201603;
+	</select>
+	
+	<select id="getCount" resultType="int">
+		SELECT count(*) from interface_transaction_log_201603;
+	</select>
+</mapper>
